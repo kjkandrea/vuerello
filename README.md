@@ -138,6 +138,8 @@ new Vue({
 App.vue에서 `<router-view />` 컴포넌트를 선언하여 해당 부분에 라우팅될 컴포넌트들이 렌더링 되도록 한다.
 
 ``` javascript
+// App.vue
+
 <template>
   <div id="app">
     <router-view />
@@ -179,4 +181,21 @@ const router = new VueRouter({
 })
 
 export default router
+```
+
+#### 네비게이션
+
+[API 레퍼런스 : <router-link>](https://router.vuejs.org/kr/api/#router-link)
+
+페이지별 네비게이션을 만들기위하여 anchor보다는 `<router-link />`가 선호되며 다음과 같이 사용할 수 있다.
+
+``` javascript
+// components/NavBar.vue
+
+<template>
+  <nav>
+    <router-link to="/">Home</router-link>
+    <router-link to="/login">Login</router-link>
+  </nav>
+</template>
 ```
