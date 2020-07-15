@@ -110,4 +110,73 @@ new Vue({
 
 [vue-router : HTML5 히스토리 모드](https://router.vuejs.org/kr/guide/essentials/history-mode.html)
 
-공식문서에서의 설명과 같이 `mode: 'history'` 옵션을 통해 히스토리 모드로 설정할 수 있으나, 적절한 서버설정이 없다면 사용자가 직접 url로 접속을 시도한다면 404 에러가 발생한다. 
+공식문서에서의 설명과 같이 `mode: 'history'` 옵션을 통해 히스토리 모드로 설정할 수 있으나, 적절한 서버설정이 없다면 사용자가 직접 url로 접속을 시도한다면 404 에러가 발생한다.
+
+#### 컴포넌트 파일 단위로 라우터 사용하기
+
+컴포넌트를 파일 단위로 생성하고 라우트 관련 코드도 router/index.js로 따로 분리하여 보자.
+
+##### 1. main.js
+
+해당 파일에서 App을 불러들여 렌더 함수에 넣어주고, router란 명칭으로 router/index.js를 가져온다.
+
+``` javascript
+// main.js
+import Vue from 'vue'
+import router from './router'
+import App from './App'
+
+new Vue({
+  el: '#app',
+  router,
+  render: h => h(App)
+})
+```
+
+##### 2. App.vue
+
+App.vue에서 `<router-view />` 컴포넌트를 선언하여 해당 부분에 라우팅될 컴포넌트들이 렌더링 되도록 한다.
+
+``` javascript
+<template>
+  <div id="app">
+    <router-view />
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {}
+  }
+}
+</script>
+```
+
+##### 3. index.js
+
+패스 별 각 컴포넌트들을 아래와 같이 매칭시켜주고 history 모드를 선언해주어, 해시가 나타나지 않도록 한다.
+
+``` javascript
+// router/index.js
+
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../components/PageHome'
+import Login from '../components/PageLogin'
+import NotFound from '../components/PageNotFound'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    { path: '/', component: Home },
+    { path: '/login', component: Login },
+    { path: '*', component: NotFound }
+  ]
+})
+
+export default router
+```
