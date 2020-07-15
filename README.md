@@ -199,3 +199,58 @@ export default router
   </nav>
 </template>
 ```
+
+#### 동적 라우트 매칭
+
+[vue-router : 동적 라우트 매칭](https://router.vuejs.org/kr/guide/essentials/dynamic-matching.html)
+
+동적 라우팅이란 동일한 레이아웃을 가지지만 각기 다른 정보를 가진 컴포넌트를 매핑하는것을 일컫는다.
+
+가령 Post란 글 단위를 사용하는 어플리케이션이라면 글이 여러개 있을텐데 글 내용을 아이디 별로 `post/34`, `post/35` 등으로 라우팅 해 줄 때 이를 동적 라우팅 이라고 한다.
+
+방법은 비교적 간단한데, path에 동적으로 변경될 부분에 colon(:)을 넣어주는 식으로 동적으로 매핑될 패스를 지정할 수 있다.
+
+``` javascript
+import Board from '../components/PageBoard'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    // :bid 부분이 동적으로 들어갈 패스이다.
+    { path: '/b/:bid', component: Board },
+  ]
+})
+```
+
+이렇게 지정해준 후 Board 컴포넌트에서 에서 :bid 부분을 params 란 프로퍼티에 접근하여 찾아 낼 수 있다.
+
+`this.$route.params.bid`
+
+``` javascript
+// PageBoard.vue
+
+<template>
+  <div>
+    Board
+    <div>bid: {{bid}}</div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      bid: 0
+    }
+  },
+  created() {
+    this.bid = this.$route.params.bid
+  }
+}
+</script>
+
+```
+
+/b/1, /b/2, /b/3 ... 등으로 접근할때마다 bid가 화면에 표시되는것을 볼 수 있다.
