@@ -34,6 +34,7 @@ import Vue from 'vue'
 import App from './App.vue'
 
 const Login = { template: '<div>Login Page</div>' }
+const NotFound = { template: '<div>Page not found</div>'}
 
 const routes = {
   '/': App,
@@ -44,7 +45,7 @@ new Vue({
   el: '#app',
   computed: {
     VueComponent() {
-      return routes[window.location.pathname] || { template: '<div>Page not found</div>'}
+      return routes[window.location.pathname] || NotFound
     }
   },
   render(h) {
@@ -62,6 +63,51 @@ routes란 객체 모델을 통해 window.location.pathname을 분석하여 미�
 
 ### vue-router
 
+Vue 라우터는 Vue.js 의 공식라우터이며 다음과 같이 구성할 수 있다.
 
+#### 시작하기
 
+[vue-router : 시작하기](https://router.vuejs.org/kr/guide/)
 
+```
+npm install vue-router --save
+```
+
+``` javascript
+import Vue from 'vue'
+import App from './App.vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+const Login = { template: '<div>Login Page</div>' }
+const NotFound = { template: '<div>Page not found</div>'}
+
+const router = new VueRouter({
+  routes: [
+    { path: '/', component: App },
+    { path: '/login', component: Login },
+    { path: '*', component: NotFound}
+  ]
+})
+
+new Vue({
+  el: '#app',
+  router,
+  render: h => h({ template : '<router-view />'})
+})
+```
+
+`Vue.use(VueRouter)` 를 통해 Vue 라우터를 사용할 것임을 Vue에게 알려주고 `routes: {path, component}`의 형태로 각 패스와 컴포넌트를 매칭시켜주면 된다.
+
+컴포넌트들이 렌더링되는 부분은 `<router-view />`라고 선언해준다.
+
+구성 후 테스트해보면 `/#/`, `/#/login`와 같은 경로에 각 컴포넌트들이 정상적으로 렌더링되는것을 볼 수 있다. 특이하게 주소창에 해시(#)가 들어가는 것을 볼 수 있는데, 이를 다음 섹션에서 설명하여보겠다.
+
+#### 해시 모드와 히스토리 모드
+
+주소창에 해시(#)마크가 나타난 이유는, Vue 라우터의 기본 모드가 hash 모드이기 때문이다. 
+
+[vue-router : HTML5 히스토리 모드](https://router.vuejs.org/kr/guide/essentials/history-mode.html)
+
+공식문서에서의 설명과 같이 `mode: 'history'` 옵션을 통해 히스토리 모드로 설정할 수 있으나, 적절한 서버설정이 없다면 사용자가 직접 url로 접속을 시도한다면 404 에러가 발생한다. 
