@@ -17,17 +17,17 @@ const requireAuth = (to, from, next) => {
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: Home, beforeEnter: requireAuth() },
+    { path: '/', component: Home, beforeEnter: requireAuth },
     { path: '/login', component: Login },
     { 
       path: '/b/:bid', 
+      beforeEnter: requireAuth,
       component: Board,
-      beforeEnter: requireAuth(),
       children : [
         { 
           path: 'c/:cid', 
           component: Card,
-          beforeEnter: requireAuth()
+          beforeEnter: requireAuth
         }
       ]
     },
