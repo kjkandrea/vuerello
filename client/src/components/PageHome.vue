@@ -6,6 +6,7 @@
       <div v-if="loading">Loading...</div>
       <div v-else>
         API result: {{apiRes}}
+        <div v-if="error">{{error}}</div>
       </div>
       <ul>
         <li>
@@ -20,11 +21,14 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       loading: false,
-      apiRes: ''
+      apiRes: '',
+      error: ''
     }
   },
   created() {
@@ -34,20 +38,19 @@ export default {
     fetchData() {
       this.loading = true
 
-      const req = new XMLHttpRequest()
-
-      req.open('GET', 'http://localhost:3000/health')
-
-      req.send()
-
-      req.addEventListener('load', () => {
-        this.loading = false
-        this.apiRes = {
-          status: req.status,
-          statusText: req.statusText,
-          response: JSON.parse(req.response)
-        }
-      })
+      axios.get('http://localhost:3000/health')
+        .then(res => {
+          this.apiRes = res.data
+        })
+        .catch(res => {
+          this.error = {
+            status: res.response.status,
+            statueText: res.response.statusText
+          }
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }
