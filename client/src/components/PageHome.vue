@@ -14,13 +14,18 @@
         </a>
       </div>
     </div>
+    <modal />  
   </div>
 </template>
 
 <script>
 import { board } from '../api'
+import Modal from './ScreenModal'
 
 export default {
+  components: {
+    Modal
+  },
   data() {
     return {
       loading: false,
@@ -77,10 +82,11 @@ export default {
   display: block;
   width: 100%;
   height: 100%;
+  background-color: rgba(9,30,66,.04);
 }
 .board-item a:hover,
 .board-item a:focus {
-  background-color: rgba(0,0,0, .1);
+  background-color: rgba(9,30,66,.08);
   color: #666;
 }
 .board-item-title {
