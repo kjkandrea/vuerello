@@ -1,5 +1,5 @@
 <template>
-  <Modal>
+  <modal>
     <div slot="header">
       <h2>
         Create new board
@@ -18,7 +18,7 @@
         form="add-board-form" :disabled="!valid">
         Create Board</button>
     </div>
-  </Modal>
+  </modal>
 </template>
 
 <script>
