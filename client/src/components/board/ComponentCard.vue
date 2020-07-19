@@ -1,6 +1,8 @@
 <template>
   <modal>
-    Card
+    <div slot="body">
+      {{ card }}
+    </div>
     <div v-if="loading">Loading Card...</div>
     <div v-else>cid: {{cid}}</div>
   </modal>
@@ -8,10 +10,16 @@
 
 <script>
 import Modal from '../ScreenModal'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
     Modal
+  },
+  computed: {
+    ...mapState({
+      card: 'card'
+    })
   },
   data() {
     return {
@@ -19,20 +27,14 @@ export default {
       loading: false
     }
   },
-  watch: {
-    '$route': {
-      handler: 'fetchData',
-      immediate: true
-    }
+  created() {
+    const id = this.$route.params.cid
+    this.FETCH_CARD({id})
   },
   methods: {
-    fetchData() {
-      this.loading = true
-      setTimeout(() => {
-        this.cid = this.$route.params.cid
-        this.loading = false
-      }, 500)
-    }
+    ...mapActions([
+      'FETCH_CARD'
+    ])
   }
 }
 </script>
