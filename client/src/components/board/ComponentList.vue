@@ -2,14 +2,23 @@
   <div class="list">
     <div class="list-header">
       <div class="list-header-title">
-        {{data.title}}
+        {{data.title}} 
       </div>
+    </div>
+
+    <div>
+      <add-card />
     </div>
   </div>
 </template>
 
 <script>
+import AddCard from './AddCard'
+
 export default {
+  components: {
+    AddCard
+  },
   props: ['data'],
 }
 </script>
