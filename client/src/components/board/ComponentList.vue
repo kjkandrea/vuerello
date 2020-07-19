@@ -6,8 +6,13 @@
       </div>
     </div>
 
-    <div>
-      <add-card />
+    <div v-if="isAddCard">
+      <add-card @close="isAddCard = false" />
+    </div>
+    <div v-else>
+      <a class="add-card-btn" href="" @click.prevent.stop="isAddCard = true">
+        &plus; Add a Card..
+      </a>
     </div>
   </div>
 </template>
@@ -20,6 +25,11 @@ export default {
     AddCard
   },
   props: ['data'],
+  data() {
+    return {
+      isAddCard: false
+    }
+  }
 }
 </script>
 
