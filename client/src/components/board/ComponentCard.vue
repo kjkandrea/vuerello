@@ -1,13 +1,18 @@
 <template>
-  <div>
+  <modal>
     Card
     <div v-if="loading">Loading Card...</div>
     <div v-else>cid: {{cid}}</div>
-  </div>
+  </modal>
 </template>
 
 <script>
+import Modal from '../ScreenModal'
+
 export default {
+  components: {
+    Modal
+  },
   data() {
     return {
       cid: 0,
