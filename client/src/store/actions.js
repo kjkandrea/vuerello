@@ -19,7 +19,11 @@ const actions = {
       commit('SET_BOARD', data.item)
     })
   },
-  DELETE_BOARD  (_, {id}) {
+  UPDATE_BOARD ({ state, dispatch }, { id, title, bgColor }) {
+    return api.board.update(id, { title, bgColor })
+      .then(() => dispatch('FETCH_BOARD', {id: state.board.id}))
+  },
+  DELETE_BOARD  (_, { id }) {
     return api.board.destroy(id)
   },
   ADD_CARD ({ state, dispatch }, {title, listId, pos}) {
