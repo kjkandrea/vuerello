@@ -1,5 +1,9 @@
 <template>
-  <div class="list">
+  <div 
+    class="list"
+    :data-list-id="data.id"
+    :data-list-pos="data.pos"
+  >
     <div class="list-header">
       <input 
         class="form-control input-title"
@@ -10,7 +14,7 @@
         @blur="onBlurTitle"
         @keyup.enter="onSubmitTitle"
       />
-      <div 
+      <div
         v-else
         class="list-header-title"
         @click="onClickTitle"
