@@ -11,9 +11,16 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
+
 export default {
   methods: {
-    
+    ...mapMutations([
+      'SET_IS_SHOW_BOARD_SETTINGS'
+    ]),
+    onClose() {
+      this.SET_IS_SHOW_BOARD_SETTINGS(false)
+    }
   }
 }
 </script>
