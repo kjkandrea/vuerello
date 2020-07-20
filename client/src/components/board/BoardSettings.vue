@@ -62,7 +62,7 @@ export default {
       this.UPDATE_BOARD({ id, bgColor })
         .then(() => {
           this.SET_THEME(bgColor)
-        })
+        }) 
     }
   }
 }
